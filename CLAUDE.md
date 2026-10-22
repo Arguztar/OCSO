@@ -7,7 +7,7 @@ El ejemplo es la **Chamarra Ligera Girasol** de Boutique El Girasol (tienda inve
 
 Una página de lanzamiento de un producto, primero para celular, que impresione:
 
-1. **Portada:** el producto en grande con efecto 3D (se inclina con el mouse o al mover el celular, y respeta `prefers-reduced-motion`), el nombre, una frase y el botón "Quiero que me avisen".
+1. **Portada:** el producto en grande con efecto 3D (se inclina con el mouse o al mover el celular; en iPhone, pide el permiso de movimiento con `DeviceOrientationEvent.requestPermission()` al primer toque; respeta `prefers-reduced-motion`), el nombre, una frase y el botón "Quiero que me avisen".
 2. **Cuenta regresiva** al lanzamiento, en vivo.
 3. **Contador de la lista:** "Ya somos N en la lista", que se actualiza solo cada 15 segundos con la función `contar_interesados`.
 4. **Por qué te va a gustar:** 3 o 4 beneficios con íconos.
@@ -27,7 +27,7 @@ Nada de reseñas ni testimonios inventados.
   - Con una llave `sb_publishable_...` no mandes `Authorization`.
   - Si el correo ya está registrado, la base responde `409` (código `23505`): dile "Ya estás en la lista con ese correo".
 - **Seguridad:** solo la llave *publishable* va en `sitio/config.js`. Nunca la secreta (`sb_secret_...`) ni la `service_role`. La página **nunca** lee la tabla `interesados`: el público solo puede registrarse y ver el número.
-- La columna `estado_correo` (pendiente, enviado, inválido, rebotado) la llena la tarea programada de Claude, no la página.
+- La columna `estado_correo` (`pendiente`, `enviado`, `invalido`, `rebotado`, sin acento) la llena la tarea programada de Claude, no la página.
 - Textos en español de México, con la voz de la marca. Sin guiones largos.
 
 ## La base de datos
