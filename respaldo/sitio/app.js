@@ -70,9 +70,15 @@
   if (!quieto) {
     escena.addEventListener("pointermove", (e) => { const r = escena.getBoundingClientRect(); inclinar(((e.clientX - r.left) / r.width) * 2 - 1, ((e.clientY - r.top) / r.height) * 2 - 1); });
     escena.addEventListener("pointerleave", () => inclinar(0, 0));
-    window.addEventListener("deviceorientation", (e) => {
+    const mover = () => window.addEventListener("deviceorientation", (e) => {
       if (e.gamma == null) return; inclinar(Math.max(-1, Math.min(1, e.gamma / 30)), Math.max(-1, Math.min(1, (e.beta - 45) / 30)));
     });
+    // En iPhone el movimiento pide permiso, y solo se puede pedir con un toque.
+    if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === "function") {
+      document.addEventListener("click", () => {
+        DeviceOrientationEvent.requestPermission().then((r) => { if (r === "granted") mover(); }).catch(() => {});
+      }, { once: true });
+    } else { mover(); }
   }
 
   // ---------- Colores ----------
